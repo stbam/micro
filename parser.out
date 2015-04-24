@@ -1,0 +1,68 @@
+Created by PLY version 3.5 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> empty
+Rule 1     empty -> <empty>
+Rule 2     program -> BEGIN stmt_lst END
+Rule 3     stmt_lst -> stmt stmt_lst
+Rule 4     stmt_lst -> empty
+Rule 5     stmt -> ID ASSIGNMENT expr SEMICOLON
+Rule 6     stmt -> READ LPAREN id_lst RPAREN SEMICOLON
+Rule 7     stmt -> WRITE LPAREN expr_lst RPAREN SEMICOLON
+Rule 8     id_lst -> ID id_lst
+Rule 9     id_lst -> empty
+Rule 10    expr_lst -> expr expr_lst
+Rule 11    expr_lst -> empty
+Rule 12    expr -> primary
+Rule 13    expr -> primary ADDOP primary
+Rule 14    primary -> LPAREN expr RPAREN
+Rule 15    primary -> ID
+Rule 16    primary -> INTLITERAL
+Rule 17    addop -> ADDOP
+Rule 18    sys_goal -> program
+
+Terminals, with rules where they appear
+
+ADDOP                : 13 17
+ASSIGNMENT           : 5
+BEGIN                : 2
+END                  : 2
+ID                   : 5 8 15
+INTLITERAL           : 16
+LPAREN               : 6 7 14
+READ                 : 6
+RPAREN               : 6 7 14
+SEMICOLON            : 5 6 7
+WRITE                : 7
+error                : 
+
+Nonterminals, with rules where they appear
+
+addop                : 
+empty                : 4 9 11 0
+expr                 : 5 10 14
+expr_lst             : 7 10
+id_lst               : 6 8
+primary              : 12 13 13
+program              : 18
+stmt                 : 3
+stmt_lst             : 2 3
+sys_goal             : 
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . empty
+    (1) empty -> .
+
+    $end            reduce using rule 1 (empty -> .)
+
+    empty                          shift and go to state 1
+
+state 1
+
+    (0) S' -> empty .
+
+
