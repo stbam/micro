@@ -5,5 +5,3 @@
 
 > * Esteban Murillo Burford
 > * Emmanuel Murillo Sánchez
-
-v 1.0.
