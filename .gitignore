@@ -2,6 +2,10 @@
 __pycache__/
 *.py[cod]
 
+# Hide files
+*.py~
+*.txt~
+
 # C extensions
 *.so
 
