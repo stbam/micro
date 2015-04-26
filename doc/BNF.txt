@@ -12,7 +12,7 @@
 
 <statement>		-> ID := <expression> ;
 	Redefinida como:
-					stmt		::= ID := expr;
+					stmt		::= ID ASSIGNMENT expr;
 
 <statement>		-> read ( <id list> ) ;
 	Redefinida como:
