@@ -1,89 +1,105 @@
+#------------------------------------------------------------
+# MicroYacc.py
+#
+# parser
+# ------------------------------------------------------------
+
 import ply.yacc as yacc
 from MicroLex import tokens
 
-# Diccionario de nombres
-names = {}
+# Parsing rules
+precedence = (('left','ADDOP'), ('right','UMINUS'))
+
+# dictionary of names
+names = { }
 
 def p_program(p):
-	'program : BEGIN stmt_lst END'
+	'program : BEGIN statementlist END'
 	p[0] = p[2]
 	
-def p_stmt_lst(p):
-	'stmt_lst : stmt stmt_lst'
+def p_statementlist_statement(p):
+	'statementlist : statement statementlist'
 	p[0] = [p[1]] + p[2]
 	
-def p_stmt_lst_empty(p):
-	'stmt_lst : empty'
+def p_statementlist_empty(p):
+	'statementlist : empty'
 	p[0] = []
 	
 def p_empty(p):
-    'empty :'
-    pass
+	'empty :'
+	pass
 	
-def p_stmt_id(p):
-	'stmt : ID ASSIGNMENT expr SEMICOLON'
-	nombres[p[1]] = p[3]
+def p_statement_assign(p):
+    'statement : ID ASSIGNMENT expression SEMICOLON'
+    names[p[1]] = p[3]
 
-def p_stmt_read(p):
-	'stmt : READ LPAREN id_lst RPAREN SEMICOLON'
-	p[0] = p[3]
+def p_statement_expression(p):
+    'statement : expression SEMICOLON'
+    p[0] = p[1]
+    
+def p_statement_read(p):
+	'statement : READ LPAREN idlst RPAREN SEMICOLON'
+	pass
+    
+def p_statement_write(p):
+	'statement : WRITE LPAREN exprlst RPAREN SEMICOLON'
+	print(p[3])
 	
-def p_stmt_write(p):
-	'stmt : WRITE LPAREN expr_lst RPAREN SEMICOLON'
-	p[0] = p[3]
-	
-def p_id_lst(p):
-	'id_lst : ID id_lst'
-	p[0] = p[2]
-	
-def p_id_lst_empty(p):
-	'id_lst : empty'
-	p[0] = []
-
-def p_expr_lst(p):
-	'expr_lst : expr expr_lst'
+def p_idlst_id(p):
+	'idlst : ID idlist'
 	p[0] = [p[1]] + p[2]
 		
-def p_expr_lst_empty(p):
-	'expr_lst : empty'
+def p_idlist_comma(p):
+	'idlist : COMMA ID idlist'
+	p[0] = [p[2]] + p[3]	
+	
+def p_idlist_empty(p):
+	'idlist : empty'
 	p[0] = []
+    
+def p_exprlst_expression(p):
+	'exprlst : expression expressionlist'
+	p[0] = [p[1]] + p[2]
 	
-def p_expr_print(p):
-    'expr : primary'
-    print(p[1])
+def p_expressionlist_comma(p):
+	'expressionlist : COMMA expression expressionlist'
+	p[0] = [p[2]] + p[3]
 	
-def p_expr_single(p):
-	'expr : LPAREN primary RPAREN'
-	print p[2]
-	p[0] = p[2]
-	
-def p_expr_compound(p):
-	'expr : primary ADDOP primary'
-	if p[2] == '+':
-		p[0] = p[1] + p[3]
-	elif p[2] == '-':
-		p[0] = p[1] - p[3]
-		
-def p_primary_expr(p):
-	'primary : LPAREN expr RPAREN'
-	p[0] = p[2]
-	
-def p_primary_id(p):
-	'primary : ID'
-	try:
-		p[0] = names[p[1]]
-	except LookupError:
-		print("Nombre no definido '%s'" % p[1])
-		p[0] = 0
-	
-def p_primary_int(p):
-	'primary : INTLITERAL'
-	p[0] = p[1]
-	
+def p_expressionlist_empty(p):
+	'expressionlist : empty'
+	p[0] = []
+
+def p_expression_addop(p):
+    'expression : expression ADDOP expression'
+    if p[2] == '+': 
+    	p[0] = p[1] + p[3]
+    elif p[2] == '-':
+    	p[0] = p[1] - p[3]
+
+def p_expression_uminus(p):
+    "expression : ADDOP expression %prec UMINUS"
+    p[0] = -p[2]
+
+def p_expression_group(p):
+    "expression : LPAREN expression RPAREN"
+    p[0] = p[2]
+
+def p_expression_number(p):
+    "expression : INT"
+    p[0] = p[1]
+
+def p_expression_name(p):
+    "expression : ID"
+    try:
+        p[0] = names[p[1]]
+    except LookupError:
+        print("Undefined name '%s'" % p[1])
+        p[0] = 0
+
 def p_error(p):
     if p:
-        print("Error de sintaxis @ '%s'" % p.value)
+        print("Syntax error at '%s'" % p.value)
     else:
-        print("Error de sintaxis @ EOF")
+        print("Syntax error at EOF")
         
 yacc.yacc()

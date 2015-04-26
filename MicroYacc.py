@@ -10,7 +10,8 @@ from MicroLex import tokens
 # Parsing rules
 precedence = (('left','ADDOP'), ('right','UMINUS'))
 
-# dictionary of names
+# Para almacenar los nombres de variables
+# Sirve para ver si una variable ya fue definida
 names = { }
 
 def p_program(p):
@@ -85,7 +86,7 @@ def p_expression_group(p):
     p[0] = p[2]
 
 def p_expression_number(p):
-    "expression : INT"
+    "expression : INTLITERAL"
     p[0] = p[1]
 
 def p_expression_name(p):
@@ -93,13 +94,13 @@ def p_expression_name(p):
     try:
         p[0] = names[p[1]]
     except LookupError:
-        print("Undefined name '%s'" % p[1])
+        print("Nombre no definido '%s'" % p[1])
         p[0] = 0
 
 def p_error(p):
     if p:
-        print("Syntax error at '%s'" % p.value)
+        print("Error de sintaxis @ '%s'" % p.value)
     else:
-        print("Syntax error at EOF")
+        print("Error de sintaxis @ EOF")
         
 yacc.yacc()
