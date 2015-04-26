@@ -20,7 +20,7 @@ Rule 14    expressionlist -> empty
 Rule 15    expression -> expression ADDOP expression
 Rule 16    expression -> ADDOP expression
 Rule 17    expression -> LPAREN expression RPAREN
-Rule 18    expression -> INT
+Rule 18    expression -> INTLITERAL
 Rule 19    expression -> ID
 
 Terminals, with rules where they appear
@@ -31,7 +31,7 @@ BEGIN                : 1
 COMMA                : 10 13
 END                  : 1
 ID                   : 5 9 10 19
-INT                  : 18
+INTLITERAL           : 18
 LPAREN               : 7 8 17
 READ                 : 7
 RPAREN               : 7 8 17
@@ -75,19 +75,19 @@ state 1
     (15) expression -> . expression ADDOP expression
     (16) expression -> . ADDOP expression
     (17) expression -> . LPAREN expression RPAREN
-    (18) expression -> . INT
+    (18) expression -> . INTLITERAL
     (19) expression -> . ID
 
     ID              shift and go to state 11
     READ            shift and go to state 5
-    WRITE           shift and go to state 7
+    WRITE           shift and go to state 8
     END             reduce using rule 4 (empty -> .)
     ADDOP           shift and go to state 3
     LPAREN          shift and go to state 4
-    INT             shift and go to state 9
+    INTLITERAL      shift and go to state 6
 
-    statementlist                  shift and go to state 6
-    statement                      shift and go to state 8
+    statementlist                  shift and go to state 7
+    statement                      shift and go to state 9
     expression                     shift and go to state 10
     empty                          shift and go to state 12
 
@@ -103,12 +103,12 @@ state 3
     (15) expression -> . expression ADDOP expression
     (16) expression -> . ADDOP expression
     (17) expression -> . LPAREN expression RPAREN
-    (18) expression -> . INT
+    (18) expression -> . INTLITERAL
     (19) expression -> . ID
 
     ADDOP           shift and go to state 3
     LPAREN          shift and go to state 4
-    INT             shift and go to state 9
+    INTLITERAL      shift and go to state 6
     ID              shift and go to state 14
 
     expression                     shift and go to state 13
@@ -119,12 +119,12 @@ state 4
     (15) expression -> . expression ADDOP expression
     (16) expression -> . ADDOP expression
     (17) expression -> . LPAREN expression RPAREN
-    (18) expression -> . INT
+    (18) expression -> . INTLITERAL
     (19) expression -> . ID
 
     ADDOP           shift and go to state 3
     LPAREN          shift and go to state 4
-    INT             shift and go to state 9
+    INTLITERAL      shift and go to state 6
     ID              shift and go to state 14
 
     expression                     shift and go to state 15
@@ -138,19 +138,29 @@ state 5
 
 state 6
 
+    (18) expression -> INTLITERAL .
+
+    SEMICOLON       reduce using rule 18 (expression -> INTLITERAL .)
+    ADDOP           reduce using rule 18 (expression -> INTLITERAL .)
+    RPAREN          reduce using rule 18 (expression -> INTLITERAL .)
+    COMMA           reduce using rule 18 (expression -> INTLITERAL .)
+
+
+state 7
+
     (1) program -> BEGIN statementlist . END
 
     END             shift and go to state 17
 
 
-state 7
+state 8
 
     (8) statement -> WRITE . LPAREN exprlst RPAREN SEMICOLON
 
     LPAREN          shift and go to state 18
 
 
-state 8
+state 9
 
     (2) statementlist -> statement . statementlist
     (2) statementlist -> . statement statementlist
@@ -163,31 +173,21 @@ state 8
     (15) expression -> . expression ADDOP expression
     (16) expression -> . ADDOP expression
     (17) expression -> . LPAREN expression RPAREN
-    (18) expression -> . INT
+    (18) expression -> . INTLITERAL
     (19) expression -> . ID
 
     ID              shift and go to state 11
     READ            shift and go to state 5
-    WRITE           shift and go to state 7
+    WRITE           shift and go to state 8
     END             reduce using rule 4 (empty -> .)
     ADDOP           shift and go to state 3
     LPAREN          shift and go to state 4
-    INT             shift and go to state 9
+    INTLITERAL      shift and go to state 6
 
     statementlist                  shift and go to state 19
-    statement                      shift and go to state 8
+    statement                      shift and go to state 9
     expression                     shift and go to state 10
     empty                          shift and go to state 12
-
-state 9
-
-    (18) expression -> INT .
-
-    SEMICOLON       reduce using rule 18 (expression -> INT .)
-    ADDOP           reduce using rule 18 (expression -> INT .)
-    RPAREN          reduce using rule 18 (expression -> INT .)
-    COMMA           reduce using rule 18 (expression -> INT .)
-
 
 state 10
 
@@ -270,12 +270,12 @@ state 18
     (15) expression -> . expression ADDOP expression
     (16) expression -> . ADDOP expression
     (17) expression -> . LPAREN expression RPAREN
-    (18) expression -> . INT
+    (18) expression -> . INTLITERAL
     (19) expression -> . ID
 
     ADDOP           shift and go to state 3
     LPAREN          shift and go to state 4
-    INT             shift and go to state 9
+    INTLITERAL      shift and go to state 6
     ID              shift and go to state 14
 
     expression                     shift and go to state 27
@@ -294,12 +294,12 @@ state 20
     (15) expression -> . expression ADDOP expression
     (16) expression -> . ADDOP expression
     (17) expression -> . LPAREN expression RPAREN
-    (18) expression -> . INT
+    (18) expression -> . INTLITERAL
     (19) expression -> . ID
 
     ADDOP           shift and go to state 3
     LPAREN          shift and go to state 4
-    INT             shift and go to state 9
+    INTLITERAL      shift and go to state 6
     ID              shift and go to state 14
 
     expression                     shift and go to state 28
@@ -313,7 +313,7 @@ state 21
     WRITE           reduce using rule 6 (statement -> expression SEMICOLON .)
     ADDOP           reduce using rule 6 (statement -> expression SEMICOLON .)
     LPAREN          reduce using rule 6 (statement -> expression SEMICOLON .)
-    INT             reduce using rule 6 (statement -> expression SEMICOLON .)
+    INTLITERAL      reduce using rule 6 (statement -> expression SEMICOLON .)
     END             reduce using rule 6 (statement -> expression SEMICOLON .)
 
 
@@ -323,12 +323,12 @@ state 22
     (15) expression -> . expression ADDOP expression
     (16) expression -> . ADDOP expression
     (17) expression -> . LPAREN expression RPAREN
-    (18) expression -> . INT
+    (18) expression -> . INTLITERAL
     (19) expression -> . ID
 
     ADDOP           shift and go to state 3
     LPAREN          shift and go to state 4
-    INT             shift and go to state 9
+    INTLITERAL      shift and go to state 6
     ID              shift and go to state 14
 
     expression                     shift and go to state 29
@@ -455,12 +455,12 @@ state 36
     (15) expression -> . expression ADDOP expression
     (16) expression -> . ADDOP expression
     (17) expression -> . LPAREN expression RPAREN
-    (18) expression -> . INT
+    (18) expression -> . INTLITERAL
     (19) expression -> . ID
 
     ADDOP           shift and go to state 3
     LPAREN          shift and go to state 4
-    INT             shift and go to state 9
+    INTLITERAL      shift and go to state 6
     ID              shift and go to state 14
 
     expression                     shift and go to state 42
@@ -481,7 +481,7 @@ state 38
     WRITE           reduce using rule 5 (statement -> ID ASSIGNMENT expression SEMICOLON .)
     ADDOP           reduce using rule 5 (statement -> ID ASSIGNMENT expression SEMICOLON .)
     LPAREN          reduce using rule 5 (statement -> ID ASSIGNMENT expression SEMICOLON .)
-    INT             reduce using rule 5 (statement -> ID ASSIGNMENT expression SEMICOLON .)
+    INTLITERAL      reduce using rule 5 (statement -> ID ASSIGNMENT expression SEMICOLON .)
     END             reduce using rule 5 (statement -> ID ASSIGNMENT expression SEMICOLON .)
 
 
@@ -494,7 +494,7 @@ state 39
     WRITE           reduce using rule 7 (statement -> READ LPAREN idlst RPAREN SEMICOLON .)
     ADDOP           reduce using rule 7 (statement -> READ LPAREN idlst RPAREN SEMICOLON .)
     LPAREN          reduce using rule 7 (statement -> READ LPAREN idlst RPAREN SEMICOLON .)
-    INT             reduce using rule 7 (statement -> READ LPAREN idlst RPAREN SEMICOLON .)
+    INTLITERAL      reduce using rule 7 (statement -> READ LPAREN idlst RPAREN SEMICOLON .)
     END             reduce using rule 7 (statement -> READ LPAREN idlst RPAREN SEMICOLON .)
 
 
@@ -520,7 +520,7 @@ state 41
     WRITE           reduce using rule 8 (statement -> WRITE LPAREN exprlst RPAREN SEMICOLON .)
     ADDOP           reduce using rule 8 (statement -> WRITE LPAREN exprlst RPAREN SEMICOLON .)
     LPAREN          reduce using rule 8 (statement -> WRITE LPAREN exprlst RPAREN SEMICOLON .)
-    INT             reduce using rule 8 (statement -> WRITE LPAREN exprlst RPAREN SEMICOLON .)
+    INTLITERAL      reduce using rule 8 (statement -> WRITE LPAREN exprlst RPAREN SEMICOLON .)
     END             reduce using rule 8 (statement -> WRITE LPAREN exprlst RPAREN SEMICOLON .)
 
 

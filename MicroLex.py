@@ -53,6 +53,11 @@ def t_INTLITERAL(t):
 # Caracteres ignorados
 t_ignore = " \t"
 
+# Para comentarios
+def t_COMMENT(t):
+    r'\--.*'
+    pass
+
 def t_newline(t):
     r'\n+'
     t.lexer.lineno += t.value.count("\n")

@@ -1,7 +1,9 @@
 #------------------------------------------------------------
 # MicroLex.py
+# Regex
 #
-# tokenizer
+# Tokenizer
+# Written by: Esteban Murillo
 # ------------------------------------------------------------
 
 import sys
@@ -50,6 +52,10 @@ def t_INTLITERAL(t):
 
 # Caracteres ignorados
 t_ignore = " \t"
+
+def t_COMMENT(t):
+    r'\--.*'
+    pass
 
 def t_newline(t):
     r'\n+'
