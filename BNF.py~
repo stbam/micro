@@ -34,12 +34,12 @@
 					
 <expression>	-> <primary> { <add op> <primary> }
 	Redefinida como:
-					primary			::= primary
-					primary			::= primary ADDOP primary
+					expr			::= primary
+					expr			::= primary ADDOP primary
 					
 <primary>		-> ( <expression> )
 	Redefinida como:
-					primary			::= expr
+					primary			::= LPAREN expr RPAREN
 					
 <primary>		-> ID
 	Redefinida como:
@@ -58,3 +58,21 @@
 	Redefinida como:
 					sys_goal		::= program SCANEOF
 """
+
+program		::= BEGIN stmt_lst END
+stmt_lst	::= stmt stmt_list
+stmt_lst	::= 
+stmt		::= ID ASSIGNMENT expr;
+stmt		::= READ LPAREN id_lst RPAREN;
+stmt		::= WRITE LPAREN expr_lst RPAREN;
+id_lst 		::= ID id_lst
+id_lst		::= 
+expr_lst	::= expr expr_lst
+expr_lst	::=
+expr		::= primary
+expr		::= primary ADDOP primary
+primary		::= LPAREN expr RPAREN
+primary		::= ID
+primary		::= INTLITERAL
+ADDOP		::= +
+ADDOP		::= -
