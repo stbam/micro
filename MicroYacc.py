@@ -1,7 +1,9 @@
 #------------------------------------------------------------
 # MicroYacc.py
+# Grammar rules for Micro programming language
 #
-# parser
+# Parser
+# Written by: Esteban Murillo
 # ------------------------------------------------------------
 
 import ply.yacc as yacc
@@ -12,7 +14,7 @@ precedence = (('left','ADDOP'), ('right','UMINUS'))
 
 # Para almacenar los nombres de variables
 # Sirve para ver si una variable ya fue definida
-names = { }
+names = {}
 
 def p_program(p):
 	'program : BEGIN statementlist END'

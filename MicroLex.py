@@ -1,7 +1,9 @@
 #------------------------------------------------------------
 # MicroLex.py
+# Regex
 #
-# tokenizer
+# Tokenizer
+# Written by: Esteban Murillo
 # ------------------------------------------------------------
 
 import sys
