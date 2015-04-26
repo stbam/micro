@@ -1,0 +1,554 @@
+Created by PLY version 3.5 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> program
+Rule 1     program -> BEGIN statementlist END
+Rule 2     statementlist -> statement statementlist
+Rule 3     statementlist -> empty
+Rule 4     empty -> <empty>
+Rule 5     statement -> ID ASSIGNMENT expression SEMICOLON
+Rule 6     statement -> expression SEMICOLON
+Rule 7     statement -> READ LPAREN idlst RPAREN SEMICOLON
+Rule 8     statement -> WRITE LPAREN exprlst RPAREN SEMICOLON
+Rule 9     idlst -> ID idlist
+Rule 10    idlist -> COMMA ID idlist
+Rule 11    idlist -> empty
+Rule 12    exprlst -> expression expressionlist
+Rule 13    expressionlist -> COMMA expression expressionlist
+Rule 14    expressionlist -> empty
+Rule 15    expression -> expression ADDOP expression
+Rule 16    expression -> ADDOP expression
+Rule 17    expression -> LPAREN expression RPAREN
+Rule 18    expression -> INT
+Rule 19    expression -> ID
+
+Terminals, with rules where they appear
+
+ADDOP                : 15 16
+ASSIGNMENT           : 5
+BEGIN                : 1
+COMMA                : 10 13
+END                  : 1
+ID                   : 5 9 10 19
+INT                  : 18
+LPAREN               : 7 8 17
+READ                 : 7
+RPAREN               : 7 8 17
+SEMICOLON            : 5 6 7 8
+WRITE                : 8
+error                : 
+
+Nonterminals, with rules where they appear
+
+empty                : 3 11 14
+expression           : 5 6 12 13 15 15 16 17
+expressionlist       : 12 13
+exprlst              : 8
+idlist               : 9 10
+idlst                : 7
+program              : 0
+statement            : 2
+statementlist        : 1 2
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . program
+    (1) program -> . BEGIN statementlist END
+
+    BEGIN           shift and go to state 1
+
+    program                        shift and go to state 2
+
+state 1
+
+    (1) program -> BEGIN . statementlist END
+    (2) statementlist -> . statement statementlist
+    (3) statementlist -> . empty
+    (5) statement -> . ID ASSIGNMENT expression SEMICOLON
+    (6) statement -> . expression SEMICOLON
+    (7) statement -> . READ LPAREN idlst RPAREN SEMICOLON
+    (8) statement -> . WRITE LPAREN exprlst RPAREN SEMICOLON
+    (4) empty -> .
+    (15) expression -> . expression ADDOP expression
+    (16) expression -> . ADDOP expression
+    (17) expression -> . LPAREN expression RPAREN
+    (18) expression -> . INT
+    (19) expression -> . ID
+
+    ID              shift and go to state 11
+    READ            shift and go to state 5
+    WRITE           shift and go to state 7
+    END             reduce using rule 4 (empty -> .)
+    ADDOP           shift and go to state 3
+    LPAREN          shift and go to state 4
+    INT             shift and go to state 9
+
+    statementlist                  shift and go to state 6
+    statement                      shift and go to state 8
+    expression                     shift and go to state 10
+    empty                          shift and go to state 12
+
+state 2
+
+    (0) S' -> program .
+
+
+
+state 3
+
+    (16) expression -> ADDOP . expression
+    (15) expression -> . expression ADDOP expression
+    (16) expression -> . ADDOP expression
+    (17) expression -> . LPAREN expression RPAREN
+    (18) expression -> . INT
+    (19) expression -> . ID
+
+    ADDOP           shift and go to state 3
+    LPAREN          shift and go to state 4
+    INT             shift and go to state 9
+    ID              shift and go to state 14
+
+    expression                     shift and go to state 13
+
+state 4
+
+    (17) expression -> LPAREN . expression RPAREN
+    (15) expression -> . expression ADDOP expression
+    (16) expression -> . ADDOP expression
+    (17) expression -> . LPAREN expression RPAREN
+    (18) expression -> . INT
+    (19) expression -> . ID
+
+    ADDOP           shift and go to state 3
+    LPAREN          shift and go to state 4
+    INT             shift and go to state 9
+    ID              shift and go to state 14
+
+    expression                     shift and go to state 15
+
+state 5
+
+    (7) statement -> READ . LPAREN idlst RPAREN SEMICOLON
+
+    LPAREN          shift and go to state 16
+
+
+state 6
+
+    (1) program -> BEGIN statementlist . END
+
+    END             shift and go to state 17
+
+
+state 7
+
+    (8) statement -> WRITE . LPAREN exprlst RPAREN SEMICOLON
+
+    LPAREN          shift and go to state 18
+
+
+state 8
+
+    (2) statementlist -> statement . statementlist
+    (2) statementlist -> . statement statementlist
+    (3) statementlist -> . empty
+    (5) statement -> . ID ASSIGNMENT expression SEMICOLON
+    (6) statement -> . expression SEMICOLON
+    (7) statement -> . READ LPAREN idlst RPAREN SEMICOLON
+    (8) statement -> . WRITE LPAREN exprlst RPAREN SEMICOLON
+    (4) empty -> .
+    (15) expression -> . expression ADDOP expression
+    (16) expression -> . ADDOP expression
+    (17) expression -> . LPAREN expression RPAREN
+    (18) expression -> . INT
+    (19) expression -> . ID
+
+    ID              shift and go to state 11
+    READ            shift and go to state 5
+    WRITE           shift and go to state 7
+    END             reduce using rule 4 (empty -> .)
+    ADDOP           shift and go to state 3
+    LPAREN          shift and go to state 4
+    INT             shift and go to state 9
+
+    statementlist                  shift and go to state 19
+    statement                      shift and go to state 8
+    expression                     shift and go to state 10
+    empty                          shift and go to state 12
+
+state 9
+
+    (18) expression -> INT .
+
+    SEMICOLON       reduce using rule 18 (expression -> INT .)
+    ADDOP           reduce using rule 18 (expression -> INT .)
+    RPAREN          reduce using rule 18 (expression -> INT .)
+    COMMA           reduce using rule 18 (expression -> INT .)
+
+
+state 10
+
+    (6) statement -> expression . SEMICOLON
+    (15) expression -> expression . ADDOP expression
+
+    SEMICOLON       shift and go to state 21
+    ADDOP           shift and go to state 20
+
+
+state 11
+
+    (5) statement -> ID . ASSIGNMENT expression SEMICOLON
+    (19) expression -> ID .
+
+    ASSIGNMENT      shift and go to state 22
+    SEMICOLON       reduce using rule 19 (expression -> ID .)
+    ADDOP           reduce using rule 19 (expression -> ID .)
+
+
+state 12
+
+    (3) statementlist -> empty .
+
+    END             reduce using rule 3 (statementlist -> empty .)
+
+
+state 13
+
+    (16) expression -> ADDOP expression .
+    (15) expression -> expression . ADDOP expression
+
+    SEMICOLON       reduce using rule 16 (expression -> ADDOP expression .)
+    ADDOP           reduce using rule 16 (expression -> ADDOP expression .)
+    RPAREN          reduce using rule 16 (expression -> ADDOP expression .)
+    COMMA           reduce using rule 16 (expression -> ADDOP expression .)
+
+  ! ADDOP           [ shift and go to state 20 ]
+
+
+state 14
+
+    (19) expression -> ID .
+
+    SEMICOLON       reduce using rule 19 (expression -> ID .)
+    ADDOP           reduce using rule 19 (expression -> ID .)
+    RPAREN          reduce using rule 19 (expression -> ID .)
+    COMMA           reduce using rule 19 (expression -> ID .)
+
+
+state 15
+
+    (17) expression -> LPAREN expression . RPAREN
+    (15) expression -> expression . ADDOP expression
+
+    RPAREN          shift and go to state 23
+    ADDOP           shift and go to state 20
+
+
+state 16
+
+    (7) statement -> READ LPAREN . idlst RPAREN SEMICOLON
+    (9) idlst -> . ID idlist
+
+    ID              shift and go to state 25
+
+    idlst                          shift and go to state 24
+
+state 17
+
+    (1) program -> BEGIN statementlist END .
+
+    $end            reduce using rule 1 (program -> BEGIN statementlist END .)
+
+
+state 18
+
+    (8) statement -> WRITE LPAREN . exprlst RPAREN SEMICOLON
+    (12) exprlst -> . expression expressionlist
+    (15) expression -> . expression ADDOP expression
+    (16) expression -> . ADDOP expression
+    (17) expression -> . LPAREN expression RPAREN
+    (18) expression -> . INT
+    (19) expression -> . ID
+
+    ADDOP           shift and go to state 3
+    LPAREN          shift and go to state 4
+    INT             shift and go to state 9
+    ID              shift and go to state 14
+
+    expression                     shift and go to state 27
+    exprlst                        shift and go to state 26
+
+state 19
+
+    (2) statementlist -> statement statementlist .
+
+    END             reduce using rule 2 (statementlist -> statement statementlist .)
+
+
+state 20
+
+    (15) expression -> expression ADDOP . expression
+    (15) expression -> . expression ADDOP expression
+    (16) expression -> . ADDOP expression
+    (17) expression -> . LPAREN expression RPAREN
+    (18) expression -> . INT
+    (19) expression -> . ID
+
+    ADDOP           shift and go to state 3
+    LPAREN          shift and go to state 4
+    INT             shift and go to state 9
+    ID              shift and go to state 14
+
+    expression                     shift and go to state 28
+
+state 21
+
+    (6) statement -> expression SEMICOLON .
+
+    ID              reduce using rule 6 (statement -> expression SEMICOLON .)
+    READ            reduce using rule 6 (statement -> expression SEMICOLON .)
+    WRITE           reduce using rule 6 (statement -> expression SEMICOLON .)
+    ADDOP           reduce using rule 6 (statement -> expression SEMICOLON .)
+    LPAREN          reduce using rule 6 (statement -> expression SEMICOLON .)
+    INT             reduce using rule 6 (statement -> expression SEMICOLON .)
+    END             reduce using rule 6 (statement -> expression SEMICOLON .)
+
+
+state 22
+
+    (5) statement -> ID ASSIGNMENT . expression SEMICOLON
+    (15) expression -> . expression ADDOP expression
+    (16) expression -> . ADDOP expression
+    (17) expression -> . LPAREN expression RPAREN
+    (18) expression -> . INT
+    (19) expression -> . ID
+
+    ADDOP           shift and go to state 3
+    LPAREN          shift and go to state 4
+    INT             shift and go to state 9
+    ID              shift and go to state 14
+
+    expression                     shift and go to state 29
+
+state 23
+
+    (17) expression -> LPAREN expression RPAREN .
+
+    SEMICOLON       reduce using rule 17 (expression -> LPAREN expression RPAREN .)
+    ADDOP           reduce using rule 17 (expression -> LPAREN expression RPAREN .)
+    RPAREN          reduce using rule 17 (expression -> LPAREN expression RPAREN .)
+    COMMA           reduce using rule 17 (expression -> LPAREN expression RPAREN .)
+
+
+state 24
+
+    (7) statement -> READ LPAREN idlst . RPAREN SEMICOLON
+
+    RPAREN          shift and go to state 30
+
+
+state 25
+
+    (9) idlst -> ID . idlist
+    (10) idlist -> . COMMA ID idlist
+    (11) idlist -> . empty
+    (4) empty -> .
+
+    COMMA           shift and go to state 31
+    RPAREN          reduce using rule 4 (empty -> .)
+
+    idlist                         shift and go to state 33
+    empty                          shift and go to state 32
+
+state 26
+
+    (8) statement -> WRITE LPAREN exprlst . RPAREN SEMICOLON
+
+    RPAREN          shift and go to state 34
+
+
+state 27
+
+    (12) exprlst -> expression . expressionlist
+    (15) expression -> expression . ADDOP expression
+    (13) expressionlist -> . COMMA expression expressionlist
+    (14) expressionlist -> . empty
+    (4) empty -> .
+
+    ADDOP           shift and go to state 20
+    COMMA           shift and go to state 36
+    RPAREN          reduce using rule 4 (empty -> .)
+
+    expressionlist                 shift and go to state 35
+    empty                          shift and go to state 37
+
+state 28
+
+    (15) expression -> expression ADDOP expression .
+    (15) expression -> expression . ADDOP expression
+
+    SEMICOLON       reduce using rule 15 (expression -> expression ADDOP expression .)
+    ADDOP           reduce using rule 15 (expression -> expression ADDOP expression .)
+    RPAREN          reduce using rule 15 (expression -> expression ADDOP expression .)
+    COMMA           reduce using rule 15 (expression -> expression ADDOP expression .)
+
+  ! ADDOP           [ shift and go to state 20 ]
+
+
+state 29
+
+    (5) statement -> ID ASSIGNMENT expression . SEMICOLON
+    (15) expression -> expression . ADDOP expression
+
+    SEMICOLON       shift and go to state 38
+    ADDOP           shift and go to state 20
+
+
+state 30
+
+    (7) statement -> READ LPAREN idlst RPAREN . SEMICOLON
+
+    SEMICOLON       shift and go to state 39
+
+
+state 31
+
+    (10) idlist -> COMMA . ID idlist
+
+    ID              shift and go to state 40
+
+
+state 32
+
+    (11) idlist -> empty .
+
+    RPAREN          reduce using rule 11 (idlist -> empty .)
+
+
+state 33
+
+    (9) idlst -> ID idlist .
+
+    RPAREN          reduce using rule 9 (idlst -> ID idlist .)
+
+
+state 34
+
+    (8) statement -> WRITE LPAREN exprlst RPAREN . SEMICOLON
+
+    SEMICOLON       shift and go to state 41
+
+
+state 35
+
+    (12) exprlst -> expression expressionlist .
+
+    RPAREN          reduce using rule 12 (exprlst -> expression expressionlist .)
+
+
+state 36
+
+    (13) expressionlist -> COMMA . expression expressionlist
+    (15) expression -> . expression ADDOP expression
+    (16) expression -> . ADDOP expression
+    (17) expression -> . LPAREN expression RPAREN
+    (18) expression -> . INT
+    (19) expression -> . ID
+
+    ADDOP           shift and go to state 3
+    LPAREN          shift and go to state 4
+    INT             shift and go to state 9
+    ID              shift and go to state 14
+
+    expression                     shift and go to state 42
+
+state 37
+
+    (14) expressionlist -> empty .
+
+    RPAREN          reduce using rule 14 (expressionlist -> empty .)
+
+
+state 38
+
+    (5) statement -> ID ASSIGNMENT expression SEMICOLON .
+
+    ID              reduce using rule 5 (statement -> ID ASSIGNMENT expression SEMICOLON .)
+    READ            reduce using rule 5 (statement -> ID ASSIGNMENT expression SEMICOLON .)
+    WRITE           reduce using rule 5 (statement -> ID ASSIGNMENT expression SEMICOLON .)
+    ADDOP           reduce using rule 5 (statement -> ID ASSIGNMENT expression SEMICOLON .)
+    LPAREN          reduce using rule 5 (statement -> ID ASSIGNMENT expression SEMICOLON .)
+    INT             reduce using rule 5 (statement -> ID ASSIGNMENT expression SEMICOLON .)
+    END             reduce using rule 5 (statement -> ID ASSIGNMENT expression SEMICOLON .)
+
+
+state 39
+
+    (7) statement -> READ LPAREN idlst RPAREN SEMICOLON .
+
+    ID              reduce using rule 7 (statement -> READ LPAREN idlst RPAREN SEMICOLON .)
+    READ            reduce using rule 7 (statement -> READ LPAREN idlst RPAREN SEMICOLON .)
+    WRITE           reduce using rule 7 (statement -> READ LPAREN idlst RPAREN SEMICOLON .)
+    ADDOP           reduce using rule 7 (statement -> READ LPAREN idlst RPAREN SEMICOLON .)
+    LPAREN          reduce using rule 7 (statement -> READ LPAREN idlst RPAREN SEMICOLON .)
+    INT             reduce using rule 7 (statement -> READ LPAREN idlst RPAREN SEMICOLON .)
+    END             reduce using rule 7 (statement -> READ LPAREN idlst RPAREN SEMICOLON .)
+
+
+state 40
+
+    (10) idlist -> COMMA ID . idlist
+    (10) idlist -> . COMMA ID idlist
+    (11) idlist -> . empty
+    (4) empty -> .
+
+    COMMA           shift and go to state 31
+    RPAREN          reduce using rule 4 (empty -> .)
+
+    idlist                         shift and go to state 43
+    empty                          shift and go to state 32
+
+state 41
+
+    (8) statement -> WRITE LPAREN exprlst RPAREN SEMICOLON .
+
+    ID              reduce using rule 8 (statement -> WRITE LPAREN exprlst RPAREN SEMICOLON .)
+    READ            reduce using rule 8 (statement -> WRITE LPAREN exprlst RPAREN SEMICOLON .)
+    WRITE           reduce using rule 8 (statement -> WRITE LPAREN exprlst RPAREN SEMICOLON .)
+    ADDOP           reduce using rule 8 (statement -> WRITE LPAREN exprlst RPAREN SEMICOLON .)
+    LPAREN          reduce using rule 8 (statement -> WRITE LPAREN exprlst RPAREN SEMICOLON .)
+    INT             reduce using rule 8 (statement -> WRITE LPAREN exprlst RPAREN SEMICOLON .)
+    END             reduce using rule 8 (statement -> WRITE LPAREN exprlst RPAREN SEMICOLON .)
+
+
+state 42
+
+    (13) expressionlist -> COMMA expression . expressionlist
+    (15) expression -> expression . ADDOP expression
+    (13) expressionlist -> . COMMA expression expressionlist
+    (14) expressionlist -> . empty
+    (4) empty -> .
+
+    ADDOP           shift and go to state 20
+    COMMA           shift and go to state 36
+    RPAREN          reduce using rule 4 (empty -> .)
+
+    expressionlist                 shift and go to state 44
+    empty                          shift and go to state 37
+
+state 43
+
+    (10) idlist -> COMMA ID idlist .
+
+    RPAREN          reduce using rule 10 (idlist -> COMMA ID idlist .)
+
+
+state 44
+
+    (13) expressionlist -> COMMA expression expressionlist .
+
+    RPAREN          reduce using rule 13 (expressionlist -> COMMA expression expressionlist .)
+
