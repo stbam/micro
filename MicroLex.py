@@ -3,7 +3,7 @@
 # Regex
 #
 # Tokenizer
-# Written by: Esteban Murillo
+# Written by: Esteban & Emmanuel Murillo
 # ------------------------------------------------------------
 
 import sys
