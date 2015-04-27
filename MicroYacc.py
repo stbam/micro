@@ -3,7 +3,7 @@
 # Grammar rules for Micro programming language
 #
 # Parser
-# Written by: Esteban Murillo
+# Written by: Esteban & Emmanuel Murillo
 # ------------------------------------------------------------
 
 import ply.yacc as yacc
