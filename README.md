@@ -5,3 +5,9 @@
 
 > * Esteban Murillo Burford
 > * Emmanuel Murillo Sánchez
+
+Para ejecutar: 
+
+```
+~$ python Micro
+```
